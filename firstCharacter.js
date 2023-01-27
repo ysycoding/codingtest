@@ -8,7 +8,6 @@ function firstCharacter(str) {
       if(str[i]===" "){
         ans+=str[i+1];
       }
-      
     }
     return ans;
   }
