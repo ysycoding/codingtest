@@ -7,4 +7,4 @@ function power(base, exponent) {
   
     if (exponent % 2 === 1) return (base * result) % 94906249;
     else return result;
-  }
+  } 
