@@ -1,26 +1,34 @@
-function missHouseMeal(sideDishes) {
-
-  // 결과를 담을 배열을 선언
-  let result = [];
-  // sideDishes를 사전식 순서로 정렬
-  sideDishes.sort();
-
-  // 모든 조합을 검사하는 재귀 함수를 작성
-  const sidePowerSet = (idx, sideDish) => {
-    if (idx === sideDishes.length) {
-      result.push(sideDish);
-      return;
+// 최대 공약수
+function gcd(m, n) {
+    if (m % n === 0) return n;
+    return gcd(n, m % n);
+  }
+  
+  function divideChocolateStick(M, N) {
+    const result = [];
+    // 최대공약수를 구한다.
+    // M, N의 순서는 상관x
+    const GCD = gcd(M, N);
+    let temp = 0; //
+  
+    // 약수는 대칭적이므로 제곱근까지만 반복해도 된다.
+    // 제곱근을 기준으로 양쪽의 값 하나씩 곱했을 때 36이 되기 때문에
+    // 제곱근 보다 큰 약수는 제곱근보다 작은 약수에서 구할 수 있다.
+    const sqrt = Math.floor(Math.sqrt(GCD));
+    for (let left = 1; left <= sqrt; left++) {
+      if (GCD % left === 0) {
+        // 최대공약수의 약수인 경우 중 제곱근 보다 작은 약수의 경우
+        result.push([left, M / left, N / left]);
+        if (left * left < GCD) {
+          // 제곱근이 아닌 경우)
+          right = GCD / left; // 최대 공약곱근이 아닌 수로 나누면 제곱근 보다 큰 약수를 구할 수 있다.
+          result.push([right, M / right, N / right]);
+        }
+      }
     }
-
-    // idx번째 요소가 포함되지 않는 경우
-    sidePowerSet(idx + 1, sideDish);
-
-    // idx번째 요소가 포함되는 경우
-    sidePowerSet(idx + 1, [...sideDish, sideDishes[idx]]);
-  };
-
-
-  sidePowerSet(0, []);
-
-  return result.sort();
-}
+  
+    //오름차순으로 정렬
+    result.sort((op1, op2) => op1[0] - op2[0]);
+  
+    return result;
+  }
